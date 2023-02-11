@@ -67,7 +67,7 @@ class Scraper:
 
                 game_achievement_list = game_achievement_info["playerstats"]["achievements"] # access the list containing a dict for each achievement
 
-                i = 0 # Counter for achievement metadata file names
+                i = 1 # Counter for achievement metadata file names. Starts at 1 because Immutable NFT IDs start at 1
                 for achievement in game_achievement_list:
                     # dict to generate the json to form the metadata for this achievement
                     achievement_dict = {}
@@ -86,6 +86,7 @@ class Scraper:
                         achievement_dict["Game"] = game_name
                         achievement_dict["Game Icon"] = game_icon_url
                         achievement_dict["Date Unlocked"] = achievement_unlocktime
+                        achievement_dict["Steam User ID"] = uid
                         # Serializing json
                         json_object = json.dumps(achievement_dict, indent = 4)
 
