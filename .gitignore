@@ -3,3 +3,4 @@
 *.json
 *.pyc
 /achievement_metadata/*
+*.txt
