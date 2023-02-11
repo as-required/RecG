@@ -67,9 +67,11 @@ class Scraper:
 
                 game_achievement_list = game_achievement_info["playerstats"]["achievements"] # access the list containing a dict for each achievement
 
+                i = 0 # Counter for achievement metadata file names
                 for achievement in game_achievement_list:
                     # dict to generate the json to form the metadata for this achievement
                     achievement_dict = {}
+
                     if achievement["achieved"] == 1: # Only store unlocked achievements
                         achievement_name = \
                             achievement["apiname"].replace("achievement_", "").replace("ACHIEVEMENT_", "").capitalize() # remove the "achievement_" prefix and make the first character capitalised
@@ -88,12 +90,14 @@ class Scraper:
                         json_object = json.dumps(achievement_dict, indent = 4)
 
                         # Create directory to save jsons to
-                        output_path = f"achievement_metadata/{achievement_name}.json"
-                        os.makedirs(os.path.dirname(output_path), exist_ok=True)
+                        output_path = f"achievement_metadata/{str(i)}" #don't put .json (quirk for minting) but keep in json format
+                        os.makedirs(os.path.dirname(output_path), exist_ok = True)
  
                         # Writing to sample.json
                         with open(output_path, "w") as outfile:
                             outfile.write(json_object)
+                        
+                        i += 1
                 
                 # store game name to access a tuple of the appid and the dict with each achievement and its unlocktime
                 all_game_achievements[game_name] = (appid, game_icon_url, game_achievements)
